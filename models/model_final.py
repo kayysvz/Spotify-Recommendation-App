@@ -5,15 +5,15 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from textblob import TextBlob
 import re
 
-songDF = pd.read_csv("./data/allsong_data.csv")
-complete_feature_set = pd.read_csv("./data/complete_feature.csv")
-playlistDF_test = pd.read_csv("./data/test_playlist.csv")
+songDF = pd.read_csv(r"..\data\allsong_data.csv")
+complete_feature_set = pd.read_csv(r"..\data\complete_feature.csv")
+playlistDF_test = pd.read_csv(r"..\data\test_playlist.csv")
 
 def generate_playlist_feature(complete_feature_set, playlist_df):
-    '''
+    '''t: 
     Summarize a user's playlist into a single vector
     ---
-    Input: 
+    Inpu
     complete_feature_set (pandas dataframe): Dataframe which includes all of the features for the spotify songs
     playlist_df (pandas dataframe): playlist dataframe
         
@@ -21,11 +21,13 @@ def generate_playlist_feature(complete_feature_set, playlist_df):
     complete_feature_set_playlist_final (pandas series): single vector feature that summarizes the playlist
     complete_feature_set_nonplaylist (pandas dataframe): 
     '''
-    
+    #print(playlist_df)
+    print(complete_feature_set.head())
     # Find song features in the playlist
     complete_feature_set_playlist = complete_feature_set[complete_feature_set['id'].isin(playlist_df['id'].values)]
     # Find all non-playlist song features
     complete_feature_set_nonplaylist = complete_feature_set[~complete_feature_set['id'].isin(playlist_df['id'].values)]
+    print(complete_feature_set_nonplaylist.head())
     complete_feature_set_playlist_final = complete_feature_set_playlist.drop(columns = "id")
     return complete_feature_set_playlist_final.sum(axis = 0), complete_feature_set_nonplaylist
 
@@ -49,10 +51,13 @@ def generate_playlist_recos(df, features, nonplaylist_features):
     
     return non_playlist_df_top_40
 
-songDF = pd.read_csv("./data/allsong_data.csv")
-complete_feature_set = pd.read_csv("./data/complete_feature.csv")
-playlistDF_test = pd.read_csv("./data/test_playlist.csv")
+songDF = pd.read_csv(r"..\data\allsong_data.csv")
+complete_feature_set = pd.read_csv(r"..\data\complete_feature.csv")
+playlistDF_test = pd.read_csv(r"..\data\test_playlist.csv")
 
+print(songDF)
+print(complete_feature_set)
+print(playlistDF_test)
 def recommend_from_playlist(songDF=songDF,complete_feature_set=complete_feature_set,playlistDF_test=playlistDF_test):
 
     # Find feature
@@ -61,7 +66,7 @@ def recommend_from_playlist(songDF=songDF,complete_feature_set=complete_feature_
     # Generate recommendation
     top40 = generate_playlist_recos(songDF, complete_feature_set_playlist_vector, complete_feature_set_nonplaylist)
 
-    return top40
+    return top40, complete_feature_set_nonplaylist
 
 if __name__ == '__main__':
     print(recommend_from_playlist()[:10])
