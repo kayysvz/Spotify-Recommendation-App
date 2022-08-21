@@ -11,13 +11,13 @@ def authenticate():
         secret_ls = f.readlines()
         cid = secret_ls[0][:-1]
         secret = secret_ls[1]
+        username = secret_ls[2]
         f.close()
 
 
     cid=cid.strip()
     secret=secret.strip()
 
-    username='kayysvz@gmail.com'
     scope='user-library-read'
 
     token = spotipy.util.prompt_for_user_token(username,
