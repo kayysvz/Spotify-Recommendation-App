@@ -1,0 +1,10 @@
+{% extends "home.html" %}
+{% block results %}
+<div class='results'>
+    <h2 style='color: #ececec'>Results</h2>
+        {% for n in range(0,len) %}
+        <p class='song' style="font-size: 11pt"> <a  href={{songs[n][1]}} target="_blank"> {{ songs[n][0]}} </a>  </p>
+        <img src={{images[n]}}>
+        {% endfor %}    
+</div>
+{% endblock %}

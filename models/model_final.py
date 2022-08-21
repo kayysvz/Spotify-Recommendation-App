@@ -22,13 +22,14 @@ def generate_playlist_feature(complete_feature_set, playlist_df):
     complete_feature_set_nonplaylist (pandas dataframe): 
     '''
     #print(playlist_df)
-    print(complete_feature_set.head())
+    #print(complete_feature_set.head())
     # Find song features in the playlist
     complete_feature_set_playlist = complete_feature_set[complete_feature_set['id'].isin(playlist_df['id'].values)]
     # Find all non-playlist song features
     complete_feature_set_nonplaylist = complete_feature_set[~complete_feature_set['id'].isin(playlist_df['id'].values)]
-    print(complete_feature_set_nonplaylist.head())
+    #print(complete_feature_set_nonplaylist.head())
     complete_feature_set_playlist_final = complete_feature_set_playlist.drop(columns = "id")
+    #print(complete_feature_set_playlist_final.head())
     return complete_feature_set_playlist_final.sum(axis = 0), complete_feature_set_nonplaylist
 
 def generate_playlist_recos(df, features, nonplaylist_features):
@@ -55,9 +56,6 @@ songDF = pd.read_csv(r"..\data\allsong_data.csv")
 complete_feature_set = pd.read_csv(r"..\data\complete_feature.csv")
 playlistDF_test = pd.read_csv(r"..\data\test_playlist.csv")
 
-print(songDF)
-print(complete_feature_set)
-print(playlistDF_test)
 def recommend_from_playlist(songDF=songDF,complete_feature_set=complete_feature_set,playlistDF_test=playlistDF_test):
 
     # Find feature
